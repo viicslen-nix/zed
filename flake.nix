@@ -54,8 +54,7 @@
         overlays = {
           zed-extensions = inputs.zed-extensions.overlays.default;
 
-          default =
-          inputs.nixpkgs.lib.composeManyExtensions [
+          default = inputs.nixpkgs.lib.composeManyExtensions [
             inputs.zed-extensions.overlays.default
             (final: _prev: {
               zed = inputs.zed-upstream.packages.${final.system}.default;
