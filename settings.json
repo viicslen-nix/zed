@@ -1,5 +1,4 @@
 {
-    "background.appearance": "blurred",
     "vim": {
         "cursor_shape": {
             "insert": "bar"

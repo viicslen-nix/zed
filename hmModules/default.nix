@@ -22,8 +22,8 @@ in {
         enable = true;
         # package = inputs.zed.packages.${pkgs.system}.zed;
         enableMcpIntegration = true;
-        mutableUserKeymaps = false;
-        mutableUserSettings = false;
+        mutableUserKeymaps = true;
+        mutableUserSettings = true;
         userSettings = mkForce (
           let
             baseSettings = builtins.fromJSON (builtins.unsafeDiscardStringContext (builtins.readFile ../settings.json));
