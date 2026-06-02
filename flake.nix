@@ -69,7 +69,7 @@
                   lockFile = ./Cargo.lock.phpantom-zed-extension;
                 };
                 postPatch = ''
-                  cp ${./Cargo.lock.phpantom-zed-extension} zed-extension/Cargo.lock
+                  install -m 0644 ${./Cargo.lock.phpantom-zed-extension} zed-extension/Cargo.lock
                 '';
               };
             })
