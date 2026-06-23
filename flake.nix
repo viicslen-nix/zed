@@ -66,10 +66,10 @@
                 extensionRoot = "zed-extension";
                 cargoRoot = "zed-extension";
                 cargoLock = {
-                  lockFile = ./Cargo.lock.phpantom-zed-extension;
+                  lockFile = ./extensions/phpantom/Cargo.lock.phpantom-zed-extension;
                 };
                 postPatch = ''
-                  install -m 0644 ${./Cargo.lock.phpantom-zed-extension} zed-extension/Cargo.lock
+                  install -m 0644 ${./extensions/phpantom/Cargo.lock} zed-extension/Cargo.lock
                 '';
               };
             })
