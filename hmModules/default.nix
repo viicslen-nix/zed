@@ -20,7 +20,7 @@ in {
     {
       programs.zed-editor = {
         enable = true;
-        # package = inputs.zed.packages.${pkgs.system}.zed;
+        # package = inputs.zed.packages.${pkgs.stdenv.hostPlatform.system}.zed;
         enableMcpIntegration = true;
         mutableUserKeymaps = true;
         mutableUserSettings = true;
@@ -39,7 +39,7 @@ in {
             }
         );
         extraPackages = with pkgs; [
-          inputs.packages.packages.${pkgs.system}.php.phpantom-lsp
+          inputs.packages.packages.${pkgs.stdenv.hostPlatform.system}.php.phpantom-lsp
           rustc
           cargo
           cargo-wasi
@@ -50,7 +50,7 @@ in {
       programs.zed-editor-extensions = {
         enable = true;
         packages = [
-          # inputs.zed.packages.${pkgs.system}.phpantom-zed-extension
+          # inputs.zed.packages.${pkgs.stdenv.hostPlatform.system}.phpantom-zed-extension
         ];
       };
     }

@@ -57,7 +57,7 @@
           default = inputs.nixpkgs.lib.composeManyExtensions [
             inputs.zed-extensions.overlays.default
             (final: _prev: {
-              zed = inputs.zed-upstream.packages.${final.system}.default;
+              zed = inputs.zed-upstream.packages.${final.stdenv.hostPlatform.system}.default;
 
               phpantom-zed-extension = final.buildZedRustExtension {
                 name = "phpantom";
@@ -82,7 +82,6 @@
               ./hmModules/default.nix
               inputs.zed-extensions.homeManagerModules.default
             ];
-            nixpkgs.overlays = [self.overlays.default];
           };
 
           zed = self.homeManagerModules.default;
