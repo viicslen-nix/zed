@@ -14,6 +14,8 @@ with inputs.self.lib; let
 in {
   options.modules.${namespace}.${name} = {
     enable = mkEnableOption (mdDoc name);
+
+    phpantom.enable = mkEnableOption (mdDoc "the phpantom PHP language server and its Zed extension");
   };
 
   config = mkIf cfg.enable (mkMerge [
@@ -28,30 +30,29 @@ in {
           let
             baseSettings = builtins.fromJSON (builtins.unsafeDiscardStringContext (builtins.readFile ../config/settings.json));
           in
-            recursiveUpdate baseSettings {
-              # languages.PHP.language_servers = [
-              #   "phpantom_lsp"
-              #   "!intelephense"
-              #   "!phpactor"
-              #   "!phptools"
-              #   "..."
-              # ];
-            }
+            recursiveUpdate baseSettings (optionalAttrs cfg.phpantom.enable {
+              languages.PHP.language_servers = [
+                "phpantom_lsp"
+                "!intelephense"
+                "!phpactor"
+                "!phptools"
+                "..."
+              ];
+            })
         );
-        extraPackages = with pkgs; [
-          inputs.packages.packages.${pkgs.stdenv.hostPlatform.system}.php.phpantom-lsp
-          rustc
-          cargo
-          cargo-wasi
-          rustup
-        ];
+        extraPackages = with pkgs;
+          [
+            rustc
+            cargo
+            cargo-wasi
+            rustup
+          ]
+          ++ optional cfg.phpantom.enable inputs.packages.packages.${pkgs.stdenv.hostPlatform.system}.php.phpantom-lsp;
       };
 
       programs.zed-editor-extensions = {
         enable = true;
-        packages = [
-          # inputs.zed.packages.${pkgs.stdenv.hostPlatform.system}.phpantom-zed-extension
-        ];
+        packages = optional cfg.phpantom.enable inputs.zed.packages.${pkgs.stdenv.hostPlatform.system}.phpantom-zed-extension;
       };
     }
     (persistence.mkPersistence config {
