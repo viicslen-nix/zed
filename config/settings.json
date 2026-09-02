@@ -26,17 +26,10 @@
     "code_actions_on_format": {
         "source.fixAll.eslint": true
     },
-    "edit_predictions": {
-        "provider": "copilot"
-    },
     "icon_theme": "Material Icon Theme",
     "agent": {
         "show_turn_stats": true,
-        "use_modifier_to_send": true,
-        "default_model": {
-            "provider": "copilot_chat",
-            "model": "claude-sonnet-4"
-        }
+        "use_modifier_to_send": true
     },
     "minimap": {
         "show": "auto"
@@ -71,6 +64,6 @@
     "theme": {
         "mode": "system",
         "light": "One Light",
-        "dark": "One Dark Pro Glass"
+        "dark": "One Dark Pro Max"
     }
 }
