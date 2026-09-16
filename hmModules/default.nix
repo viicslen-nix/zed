@@ -54,6 +54,9 @@ in {
         enable = true;
         packages = optional cfg.phpantom.enable inputs.zed.packages.${pkgs.stdenv.hostPlatform.system}.phpantom-zed-extension;
       };
+
+      # Resolve via PATH, not the package: home-manager's wrapper that adds extraPackages isn't exposed.
+      home.packages = [(pkgs.writeShellScriptBin "zed" ''exec zeditor "$@"'')];
     }
     (persistence.mkPersistence config {
       config = ["Zed"];
