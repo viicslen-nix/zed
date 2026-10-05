@@ -85,10 +85,13 @@
 
         homeManagerModules = {
           default = {
+            key = "viicslen-zed:default";
             imports = [
               ./hmModules/default.nix
               inputs.zed-extensions.homeManagerModules.default
             ];
+            # `zedInputs`, not `inputs`: home-manager's extraSpecialArgs would hand the module the consumer's set.
+            _module.args.zedInputs = inputs;
           };
 
           zed = self.homeManagerModules.default;

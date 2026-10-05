@@ -80,17 +80,14 @@ The editor package itself is left at home-manager's default (`pkgs.zed-editor`).
 
 ### Requirements
 
-The module reads the **consumer's** `inputs` (passed via `extraSpecialArgs`),
-not this flake's own:
+None beyond home-manager. The module reads this flake's own inputs (as
+`zedInputs`), so the consumer can name the input anything:
 
-| Attribute | Used for |
+| Source | Used for |
 | --- | --- |
-| `inputs.self.lib.persistence` | `mkPersistence` for the `Zed` config directory |
-| `config.modules.functionality.impermanence` | Read by `mkPersistence` |
-| `inputs.packages` | `php.phpantom-lsp` (only with `phpantom.enable`) |
-| `inputs.zed` | `phpantom-zed-extension` (only with `phpantom.enable`) |
-
-The consumer must therefore name this flake's input `zed`.
+| `packages` input | `php.phpantom-lsp` (only with `phpantom.enable`) |
+| this flake's `packages` | `phpantom-zed-extension` (only with `phpantom.enable`) |
+| `modules.functionality.impermanence` | Persists `~/.config/Zed` when the consumer declares that option and enables auto-persistence; skipped otherwise |
 
 ## Development
 
