@@ -4,6 +4,10 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-parts.url = "github:hercules-ci/flake-parts";
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     packages = {
       url = "github:viicslen-nix/packages";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -22,6 +26,8 @@
     ...
   }:
     flake-parts.lib.mkFlake {inherit inputs;} {
+      imports = [inputs.treefmt-nix.flakeModule];
+
       systems = [
         "x86_64-linux"
         "aarch64-linux"
@@ -35,12 +41,17 @@
           overlays = [self.overlays.default];
         };
       in {
-        formatter = pkgs.alejandra;
+        treefmt.imports = [./treefmt.nix];
+
+        # treefmt runs `statix fix`, which skips unfixable lints such as W20.
+        checks.statix = pkgs.runCommandLocal "statix-check" {} ''
+          ${pkgs.lib.getExe pkgs.statix} check ${./.} && touch $out
+        '';
 
         packages = {
           default = inputs.zed-upstream.packages.${system}.default;
           zed-editor = inputs.zed-upstream.packages.${system}.default;
-          phpantom-zed-extension = pkgs.phpantom-zed-extension;
+          inherit (pkgs) phpantom-zed-extension;
         };
 
         apps = {};
