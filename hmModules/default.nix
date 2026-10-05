@@ -22,7 +22,7 @@ in {
     {
       programs.zed-editor = {
         enable = true;
-        # package = inputs.zed.packages.${pkgs.stdenv.hostPlatform.system}.zed;
+        # package = inputs.zed.packages.${pkgs.stdenv.hostPlatform.system}.zed-editor;
         enableMcpIntegration = true;
         mutableUserKeymaps = true;
         mutableUserSettings = true;
